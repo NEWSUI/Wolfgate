@@ -4,7 +4,7 @@
   id: Arbiter
   parent: BaseVessel
   name: 'CASC Arbiter'
-  description: 'Small fighter designed with escorting larger vessels in mind. It is equiped with two AC-35 and a TARNYX 90mm EMP canon.'
+  description: 'A small fighter designed with escorting larger vessels in mind. It is equiped with two AC-35 and a TARNYX 90mm EMP canon.'
   price: 43915 # appraised at 36596
   category: Small
   group: Sr

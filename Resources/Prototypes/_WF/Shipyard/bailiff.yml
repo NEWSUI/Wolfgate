@@ -4,7 +4,7 @@
   id: Bailiff
   parent: BaseVessel
   name: 'CASC Bailiff'
-  description: 'Todo'
+  description: 'a long distance combat vessel made to fight armored vessels, the Bailiff is armed with four Equinox 90mm Sabot cannon and 2 Ion disruptor.'
   price: 163453 # appraised at 136211
   purchasable: false # T1 - voucher only
   category: Medium
@@ -14,6 +14,8 @@
   shuttlePath: /SharedMaps/_WF/Shipyard/Shuttles/bailiff.yml
   guidebookPage: Null
   class:
+  - Corvette
+  - Brawler
   - Patrol
   - Pursuit
   engine:

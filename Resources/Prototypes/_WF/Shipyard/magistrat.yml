@@ -4,7 +4,7 @@
   id: Magistrat
   parent: BaseVessel
   name: 'CASC Magistrat'
-  description: 'todo'
+  description: 'A medium armored and manuverable fighter designed to scare trespacer. It is equiped with a four Phalanx point defence and a Bofor and 32 EMP shell.'
   price: 62905 # appraised at 52421
   category: Small
   group: Sr
@@ -13,6 +13,7 @@
   shuttlePath: /SharedMaps/_WF/Shipyard/Shuttles/magistrat.yml
   guidebookPage: Null
   class:
+  - Brawler
   - Patrol
   - Pursuit
   engine:

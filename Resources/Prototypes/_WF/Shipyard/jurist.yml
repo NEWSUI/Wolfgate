@@ -4,7 +4,7 @@
   id: jurist
   parent: BaseVessel
   name: 'CASC jurist'
-  description: 'todo'
+  description: 'a Medium Missile ship made to disable ship at great distance. the Jurist has two Torvek, two Vanyk and four Phalanx.'
   price: 123717 # appraised at 103089
   category: Small
   group: Sr
