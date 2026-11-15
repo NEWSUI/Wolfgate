@@ -16,7 +16,7 @@
   - Patrol
   - Pursuit
   engine:
-  - Uranium
+  - Bananium
 
 - type: gameMap
   id: Magistrat
