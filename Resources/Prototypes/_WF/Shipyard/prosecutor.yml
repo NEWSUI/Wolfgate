@@ -5,7 +5,7 @@
   parent: BaseVessel
   name: 'CASC Prosecutor'
   description: 'A fast deployement boarding vessel able to lock ship of any size in place and is equiped with many breaching supply.'
-  price: 113928 # appraised at 94940
+  price: 116412 # appraised at 97010
   purchasable: false # T1 - voucher only
   category: Medium
   group: Sr

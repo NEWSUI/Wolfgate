@@ -5,7 +5,7 @@
   parent: BaseVessel
   name: 'CASC Magistrat'
   description: 'A medium armored and manuverable fighter designed to scare trespacer. It is equiped with a four Phalanx point defence and a Bofor and 32 EMP shell.'
-  price: 62905 # appraised at 52421
+  price: 69228 # appraised at 57690
   category: Small
   group: Sr
   access: Brig

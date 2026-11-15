@@ -5,7 +5,7 @@
   parent: BaseVessel
   name: 'CASC Bailiff'
   description: 'a long distance combat vessel made to fight armored vessels, the Bailiff is armed with four Equinox 90mm Sabot cannon and 2 Ion disruptor.'
-  price: 163453 # appraised at 136211
+  price: 163675 # appraised at 136396
   purchasable: false # T1 - voucher only
   category: Medium
   group: Sr
