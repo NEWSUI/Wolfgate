@@ -4,8 +4,8 @@ meta:
   engineVersion: 291.0.4
   forkId: ""
   forkVersion: ""
-  time: 11/17/2026 15:45:50
-  entityCount: 482
+  time: 11/17/2026 16:03:02
+  entityCount: 510
 maps: []
 grids:
 - 1
@@ -2086,6 +2086,128 @@ entities:
     - type: Transform
       parent: 1
       pos: -5.5,-6.5
+- proto: RadarEdgeMarkerCenter
+  entities:
+  - uid: 483
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,-2.5
+  - uid: 484
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,-1.5
+  - uid: 485
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,-0.5
+  - uid: 486
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,0.5
+  - uid: 487
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,1.5
+  - uid: 488
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,3.5
+  - uid: 489
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,4.5
+  - uid: 490
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,5.5
+  - uid: 491
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,6.5
+  - uid: 492
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,7.5
+  - uid: 493
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,8.5
+  - uid: 494
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,2.5
+  - uid: 495
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,8.5
+  - uid: 496
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,7.5
+  - uid: 497
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,6.5
+  - uid: 498
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,5.5
+  - uid: 499
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,4.5
+  - uid: 500
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,3.5
+  - uid: 501
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,2.5
+  - uid: 502
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,1.5
+  - uid: 503
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,-0.5
+  - uid: 504
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,-1.5
+  - uid: 505
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,-2.5
+  - uid: 506
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,0.5
 - proto: RadarEdgeMarkerDiagonal
   entities:
   - uid: 281
@@ -2133,6 +2255,34 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: -3.5,-0.5
+- proto: RadarEdgeMarkerHalftiltLeft
+  entities:
+  - uid: 508
+    components:
+    - type: Transform
+      parent: 1
+      rot: 1.5707963267948966 rad
+      pos: 0.5,-3.5
+  - uid: 509
+    components:
+    - type: Transform
+      parent: 1
+      rot: -1.5707963267948966 rad
+      pos: 1.5,9.5
+- proto: RadarEdgeMarkerHalftiltRight
+  entities:
+  - uid: 507
+    components:
+    - type: Transform
+      parent: 1
+      rot: -1.5707963267948966 rad
+      pos: 1.5,-3.5
+  - uid: 510
+    components:
+    - type: Transform
+      parent: 1
+      rot: 1.5707963267948966 rad
+      pos: 0.5,9.5
 - proto: RadarEdgeMarkerStraight
   entities:
   - uid: 289
