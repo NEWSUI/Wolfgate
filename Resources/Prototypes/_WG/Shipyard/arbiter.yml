@@ -10,7 +10,7 @@
   group: Sr
   access: Brig
   mapchecker_group_override: Security
-  shuttlePath: /SharedMaps/_WF/Shipyard/Shuttles/arbiter.yml
+  shuttlePath: /SharedMaps/_WG/Shipyard/Shuttles/arbiter.yml
   guidebookPage: Null
   class:
   - Patrol
@@ -21,7 +21,7 @@
 - type: gameMap
   id: Arbiter
   mapName: 'Arbiter'
-  mapPath: /SharedMaps/_WF/Shipyard/Shuttles/arbiter.yml
+  mapPath: /SharedMaps/_WG/Shipyard/Shuttles/arbiter.yml
   minPlayers: 0
   stations:
     Arbiter:

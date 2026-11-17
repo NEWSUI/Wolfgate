@@ -10,7 +10,7 @@
   group: Sr
   access: Brig
   mapchecker_group_override: Security
-  shuttlePath: /SharedMaps/_WF/Shipyard/Shuttles/jurist.yml
+  shuttlePath: /SharedMaps/_WG/Shipyard/Shuttles/jurist.yml
   guidebookPage: Null
   class:
   - Patrol
@@ -21,7 +21,7 @@
 - type: gameMap
   id: jurist
   mapName: 'jurist'
-  mapPath: /SharedMaps/_WF/Shipyard/Shuttles/jurist.yml
+  mapPath: /SharedMaps/_WG/Shipyard/Shuttles/jurist.yml
   minPlayers: 0
   stations:
     jurist:
