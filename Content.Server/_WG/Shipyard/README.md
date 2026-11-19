@@ -54,6 +54,8 @@ share from its slot, or from the counter of a trader hosting it (`ShipyardHostCa
 
 ### Prototypes
 
+- [`Resources/Prototypes/_WG/Shipyard/arbiter.yml`](../../../Resources/Prototypes/_WG/Shipyard/arbiter.yml)
+- [`Resources/Prototypes/_WG/Shipyard/bailiff.yml`](../../../Resources/Prototypes/_WG/Shipyard/bailiff.yml)
 - [`Resources/Prototypes/_WG/Shipyard/brute.yml`](../../../Resources/Prototypes/_WG/Shipyard/brute.yml)
 - [`Resources/Prototypes/_WG/Shipyard/bucket.yml`](../../../Resources/Prototypes/_WG/Shipyard/bucket.yml)
 - [`Resources/Prototypes/_WG/Shipyard/carabela.yml`](../../../Resources/Prototypes/_WG/Shipyard/carabela.yml)
@@ -64,7 +66,10 @@ share from its slot, or from the counter of a trader hosting it (`ShipyardHostCa
 - [`Resources/Prototypes/_WG/Shipyard/foxtrot_ii.yml`](../../../Resources/Prototypes/_WG/Shipyard/foxtrot_ii.yml)
 - [`Resources/Prototypes/_WG/Shipyard/hammerhead.yml`](../../../Resources/Prototypes/_WG/Shipyard/hammerhead.yml)
 - [`Resources/Prototypes/_WG/Shipyard/hermes.yml`](../../../Resources/Prototypes/_WG/Shipyard/hermes.yml)
+- [`Resources/Prototypes/_WG/Shipyard/jurist.yml`](../../../Resources/Prototypes/_WG/Shipyard/jurist.yml)
 - [`Resources/Prototypes/_WG/Shipyard/lathe_recipes.yml`](../../../Resources/Prototypes/_WG/Shipyard/lathe_recipes.yml)
+- [`Resources/Prototypes/_WG/Shipyard/magistrat.yml`](../../../Resources/Prototypes/_WG/Shipyard/magistrat.yml)
+- [`Resources/Prototypes/_WG/Shipyard/prosecutor.yml`](../../../Resources/Prototypes/_WG/Shipyard/prosecutor.yml)
 - [`Resources/Prototypes/_WG/Shipyard/reach.yml`](../../../Resources/Prototypes/_WG/Shipyard/reach.yml)
 - [`Resources/Prototypes/_WG/Shipyard/Reaver/despot.yml`](../../../Resources/Prototypes/_WG/Shipyard/Reaver/despot.yml)
 - [`Resources/Prototypes/_WG/Shipyard/Reaver/huolian.yml`](../../../Resources/Prototypes/_WG/Shipyard/Reaver/huolian.yml)
@@ -93,6 +98,8 @@ share from its slot, or from the counter of a trader hosting it (`ShipyardHostCa
 
 ### Shared maps
 
+- [`Resources/SharedMaps/_WG/Shipyard/Shuttles/arbiter.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/arbiter.yml)
+- [`Resources/SharedMaps/_WG/Shipyard/Shuttles/bailiff.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/bailiff.yml)
 - [`Resources/SharedMaps/_WG/Shipyard/Shuttles/brute.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/brute.yml)
 - [`Resources/SharedMaps/_WG/Shipyard/Shuttles/bucket.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/bucket.yml)
 - [`Resources/SharedMaps/_WG/Shipyard/Shuttles/carabela.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/carabela.yml)
@@ -102,6 +109,9 @@ share from its slot, or from the counter of a trader hosting it (`ShipyardHostCa
 - [`Resources/SharedMaps/_WG/Shipyard/Shuttles/foxtrot_ii.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/foxtrot_ii.yml)
 - [`Resources/SharedMaps/_WG/Shipyard/Shuttles/hammerhead.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/hammerhead.yml)
 - [`Resources/SharedMaps/_WG/Shipyard/Shuttles/hermes.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/hermes.yml)
+- [`Resources/SharedMaps/_WG/Shipyard/Shuttles/jurist.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/jurist.yml)
+- [`Resources/SharedMaps/_WG/Shipyard/Shuttles/magistrat.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/magistrat.yml)
+- [`Resources/SharedMaps/_WG/Shipyard/Shuttles/prosecutor.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/prosecutor.yml)
 - [`Resources/SharedMaps/_WG/Shipyard/Shuttles/reach.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/reach.yml)
 - [`Resources/SharedMaps/_WG/Shipyard/Shuttles/Reaver/despot.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/Reaver/despot.yml)
 - [`Resources/SharedMaps/_WG/Shipyard/Shuttles/Reaver/huolian.yml`](../../../Resources/SharedMaps/_WG/Shipyard/Shuttles/Reaver/huolian.yml)
