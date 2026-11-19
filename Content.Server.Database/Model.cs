@@ -75,6 +75,9 @@ namespace Content.Server.Database
         public DbSet<WolfgateCensus> WolfgateCensus { get; set; } = null!;
         public DbSet<WolfgateCensusResponse> WolfgateCensusResponse { get; set; } = null!;
         // WOLFGATE END
+        public DbSet<WolfgateShipCommandPreset> WolfgateShipCommandPreset { get; set; } = null!; // WOLFGATE(ShipCommand): players' ship presets
+        public DbSet<WolfgateNanoChatNumber> WolfgateNanoChatNumber { get; set; } = null!; // WOLFGATE(NanoChat): each character's number
+        public DbSet<WolfgateAdminObserver> WolfgateAdminObserver { get; set; } = null!; // WOLFGATE(AdminObserver): admins' observer settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -607,6 +610,30 @@ namespace Content.Server.Database
             modelBuilder.Entity<WolfgateCensusResponse>()
                 .HasIndex(r => r.CensusId);
             // WOLFGATE END
+
+            // WOLFGATE(ShipCommand) START: one preset per player, vessel design and name
+            modelBuilder.Entity<WolfgateShipCommandPreset>()
+                .HasIndex(p => new { p.PlayerUserId, p.Vessel, p.Name })
+                .IsUnique();
+            // WOLFGATE END
+
+            // WOLFGATE(NanoChat) START: a number belongs to one character, gone with it
+            modelBuilder.Entity<WolfgateNanoChatNumber>()
+                .HasOne(n => n.Profile)
+                .WithMany()
+                .HasForeignKey(n => n.ProfileId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<WolfgateNanoChatNumber>()
+                .HasIndex(n => n.Number)
+                .IsUnique();
+            // WOLFGATE END
+
+            // WOLFGATE(AdminObserver) START: one observer document per admin
+            modelBuilder.Entity<WolfgateAdminObserver>()
+                .HasIndex(o => o.PlayerUserId)
+                .IsUnique();
+            // WOLFGATE END
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -703,13 +730,16 @@ namespace Content.Server.Database
         // WOLFGATE(BloodColour): blood and flesh colour as hex, null for the species' own.
         [Column("blood_color")] public string? BloodColor { get; set; }
 
-        // WOLFGATE(ChatFont): the wfChatFont prototype id, empty for the default.
+        // WOLFGATE(ChatFont): the wgChatFont prototype id, empty for the default.
         [Column("chat_font")] public string ChatFont { get; set; } = "";
+
+        // WOLFGATE(CombatMusic): the combat playlist, comma-separated wgCombatTrack ids, empty for the faction's own.
+        [Column("combat_music")] public string CombatMusic { get; set; } = "";
 
         // WOLFGATE(TypingBubble): the typingIndicator prototype id, null for the species' own.
         [Column("typing_indicator")] public string? TypingIndicator { get; set; }
 
-        // WOLFGATE(EmoteVoices): the wfMessageSound prototype id, empty for the species' own.
+        // WOLFGATE(EmoteVoices): the wgMessageSound prototype id, empty for the species' own.
         [Column("message_sound")] public string MessageSound { get; set; } = "";
 
         // WOLFGATE(Voice): the voice settings as JSON, null in rows saved before voices existed.
@@ -2053,7 +2083,7 @@ namespace Content.Server.Database
         [Required, MaxLength(32)]
         public string Title { get; set; } = null!;
 
-        /// <summary>WFCompanyPermissions flags.</summary>
+        /// <summary>WGCompanyPermissions flags.</summary>
         public int Permissions { get; set; }
 
         public int Wage { get; set; }
@@ -2108,7 +2138,7 @@ namespace Content.Server.Database
 
         public DateTime Time { get; set; }
 
-        /// <summary>WFCompanyLedgerKind.</summary>
+        /// <summary>WGCompanyLedgerKind.</summary>
         public int Kind { get; set; }
 
         public long Amount { get; set; }
@@ -2314,6 +2344,57 @@ namespace Content.Server.Database
         public string Answers { get; set; } = null!;
 
         public DateTime CreatedAt { get; set; }
+    }
+    // WOLFGATE END
+
+    // WOLFGATE(ShipCommand) START: a player's saved settings for a commanded ship of one vessel design
+    public class WolfgateShipCommandPreset
+    {
+        [Key]
+        public int Id { get; set; }
+
+        public Guid PlayerUserId { get; set; }
+
+        [Required, MaxLength(64)]
+        public string Vessel { get; set; } = "";
+
+        [Required, MaxLength(32)]
+        public string Name { get; set; } = "";
+
+        /// <summary>The settings as JSON (WGShipPresetData).</summary>
+        [Required]
+        public string Data { get; set; } = "";
+
+        public DateTime Saved { get; set; }
+    }
+    // WOLFGATE END
+
+    // WOLFGATE(NanoChat) START: the NanoChat number a character keeps from round to round
+    /// <summary>A character's NanoChat number.</summary>
+    public class WolfgateNanoChatNumber
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ProfileId { get; set; }
+        public Profile Profile { get; set; } = null!;
+
+        public int Number { get; set; }
+    }
+    // WOLFGATE END
+
+    // WOLFGATE(AdminObserver) START: an admin's saved observer presets, staff marker and kit
+    /// <summary>An admin's observer settings.</summary>
+    public class WolfgateAdminObserver
+    {
+        [Key]
+        public int Id { get; set; }
+
+        public Guid PlayerUserId { get; set; }
+
+        /// <summary>The settings as JSON (WGAdminObserverData).</summary>
+        [Required]
+        public string Data { get; set; } = "";
+
+        public DateTime Saved { get; set; }
     }
     // WOLFGATE END
 }
