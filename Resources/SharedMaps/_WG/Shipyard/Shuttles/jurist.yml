@@ -1324,8 +1324,6 @@ entities:
       deviceLists:
       - 2
       - 3
-      configurators:
-      - invalid
   - uid: 180
     components:
     - type: Transform
@@ -1336,8 +1334,6 @@ entities:
       deviceLists:
       - 2
       - 3
-      configurators:
-      - invalid
   - uid: 181
     components:
     - type: Transform
@@ -1347,8 +1343,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 3
-      configurators:
-      - invalid
   - uid: 182
     components:
     - type: Transform
@@ -1358,8 +1352,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 3
-      configurators:
-      - invalid
   - uid: 183
     components:
     - type: Transform
