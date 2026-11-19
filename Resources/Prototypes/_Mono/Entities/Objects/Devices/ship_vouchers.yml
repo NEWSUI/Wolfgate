@@ -773,6 +773,9 @@
     vessels:
     - Hornet
     - Lightning
+    - Arbiter
+    - jurist
+    - Magistrat
 
 # Start T1
 - type: entity
@@ -796,3 +799,5 @@
     companyName: Colonial
     vessels:
     - Petra
+    - Prosecutor
+    - Bailiff
