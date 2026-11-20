@@ -1,4 +1,7 @@
 using System.Numerics;
+using Content.Shared._WG.Modsuits.Components;
+using Content.Shared._WG.Modsuits.Systems;
+using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -17,6 +20,7 @@ public sealed partial class ModMagneticHarnessSystem : VirtualController
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] private ModSuitSystem _modSuit = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
@@ -26,21 +30,43 @@ public sealed partial class ModMagneticHarnessSystem : VirtualController
 
     private readonly List<EntityUid> _forget = new();
 
-    [SubscribeLocalEvent]
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ModMagneticHarnessComponent, DidEquipEvent>(OnDidEquip);
+        SubscribeLocalEvent<ModMagneticHarnessComponent, DidEquipHandEvent>(OnDidEquipHand);
+    }
+
     private void OnDidEquip(Entity<ModMagneticHarnessComponent> ent, ref DidEquipEvent args)
     {
-        if (_timing.ApplyingState
-            || !ent.Comp.Slots.Contains(args.Slot)
-            || !HasComp<GunComponent>(args.Equipment))
+        if (_timing.ApplyingState || !ent.Comp.Slots.Contains(args.Slot))
             return;
 
-        var magnetized = EnsureComp<ModMagnetizedGunComponent>(args.Equipment);
-        magnetized.Wearer = ent;
-        magnetized.Slot = args.Slot;
+        Magnetize(args.Equipment, ent, args.Slot);
+    }
+
+    private void OnDidEquipHand(Entity<ModMagneticHarnessComponent> ent, ref DidEquipHandEvent args)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        // A gun drawn from a slot or picked up from the floor should come back to suit storage.
+        Magnetize(args.Equipped, ent, "suitstorage");
+    }
+
+    private void Magnetize(EntityUid gun, Entity<ModMagneticHarnessComponent> harness, string slot)
+    {
+        if (!HasComp<GunComponent>(gun))
+            return;
+
+        var magnetized = EnsureComp<ModMagnetizedGunComponent>(gun);
+        magnetized.Wearer = harness;
+        magnetized.Slot = slot;
         magnetized.LooseSince = null;
         magnetized.Launched = false;
-        Dirty(args.Equipment, magnetized);
-        PhysicsSystem.UpdateIsPredicted(args.Equipment);
+        Dirty(gun, magnetized);
+        PhysicsSystem.UpdateIsPredicted(gun);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -136,6 +162,21 @@ public sealed partial class ModMagneticHarnessSystem : VirtualController
 
     private bool TryCatch(EntityUid gun, ModMagnetizedGunComponent magnetized, EntityUid owner, ModMagneticHarnessComponent harness)
     {
+        // TG's magnetic harness spends 1.0 DEFAULT_CHARGE_DRAIN on every successful catch. Check the
+        // balance before touching the gun and pay once it is caught, so a failed catch costs nothing.
+        Entity<ModSuitComponent>? paySuit = null;
+        var cost = 0f;
+        if (harness.Module is { } moduleUid
+            && TryComp<ModModuleComponent>(moduleUid, out var module)
+            && _modSuit.TryGetModuleSuit(moduleUid, out var suit))
+        {
+            cost = module.UsePower * ModSuitSystem.PowerDrainScale;
+            if (cost > 0f && !_modSuit.HasCharge(suit, cost))
+                return false;
+
+            paySuit = suit;
+        }
+
         if (TryComp<PhysicsComponent>(gun, out var body))
             PhysicsSystem.SetBodyStatus(gun, body, BodyStatus.OnGround);
 
@@ -156,7 +197,12 @@ public sealed partial class ModMagneticHarnessSystem : VirtualController
             caught = _hands.TryPickupAnyHand(owner, gun, checkActionBlocker: false);
 
         if (caught)
+        {
+            if (paySuit is { } payer)
+                _modSuit.TryUseCharge(payer, cost);
+
             _audio.PlayPvs(harness.CatchSound, owner);
+        }
 
         return caught;
     }

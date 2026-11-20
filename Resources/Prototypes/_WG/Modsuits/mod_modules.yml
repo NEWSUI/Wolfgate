@@ -178,9 +178,9 @@
   description: "These are powerful electromagnets fitted into the suit's boots, allowing users both excellent traction no matter the condition indoors, and to essentially hitch a ride on the exterior of a hull."
   components:
   - type: ModModule
+    activePower: 0.4
     moduleType: Toggle
     complexity: 3
-    activePower: 0.6
     requiredParts:
     - shoes
     incompatible:
@@ -191,14 +191,52 @@
     sprintModifier: 1
 
 - type: entity
+  parent: BaseModsuitModule
+  id: ModsuitModuleVoidBoots
+  name: MOD voidboots module
+  description: A set of bluespace-tethered boots that grip the void itself, letting the wearer walk in space as if the suit's boots were magnetic stability boots on a hull.
+  components:
+  - type: Sprite
+    state: magnet
+  - type: ModModule
+    activePower: 0.4
+    moduleType: Toggle
+    complexity: 3
+    requiredParts:
+    - shoes
+    incompatible:
+      tags:
+      - ModsuitModuleGravity
+  - type: Tag
+    tags:
+    - ModsuitModule
+    - ModsuitModuleGravity
+  - type: ModGrantComponentsModule
+    slot: shoes
+    toggleItem: true
+    components:
+    - type: ItemToggle
+      onUse: false
+      onActivate: false
+    - type: Magboots
+      requiresGrid: false
+      enabledPrefix: null
+    - type: ComponentToggler
+      components:
+      - type: NoSlip
+  - type: ModSpeedModule
+    walkModifier: 0.85
+    sprintModifier: 0.85
+
+- type: entity
   abstract: true
   parent: BaseModsuitModule
   id: BaseModsuitModuleVisor
   components:
   - type: ModModule
+    activePower: 0.24
     moduleType: Toggle
     complexity: 1
-    activePower: 0.2
     requiredParts:
     - head
     incompatible:
@@ -262,7 +300,6 @@
     state: welding
   - type: ModModule
     complexity: 1
-    idlePower: 0.1
     requiredParts:
     - head
   - type: ModGrantComponentsModule
@@ -288,9 +325,9 @@
   - type: Sprite
     state: health
   - type: ModModule
+    usePower: 0.8
     moduleType: Active
     complexity: 1
-    activePower: 0.2
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -305,9 +342,9 @@
   - type: Sprite
     state: gps
   - type: ModModule
+    usePower: 0.16
     moduleType: Active
     complexity: 1
-    activePower: 0.2
   - type: ModDeviceModule
     device: ModsuitDeviceGps
 
@@ -321,9 +358,10 @@
     state: jetpack
   - type: Appearance
   - type: ModModule
+    activePower: 0.04
+    usePower: 0.8
     moduleType: Toggle
     complexity: 3
-    activePower: 20
     requiredParts:
     - outerClothing
     incompatible:
@@ -347,9 +385,9 @@
   - type: Sprite
     state: regulator
   - type: ModModule
+    activePower: 0.24
     moduleType: Toggle
     complexity: 1
-    activePower: 1.2
   - type: ModThermalRegulatorModule
 
 - type: entity
@@ -361,8 +399,8 @@
   - type: Sprite
     state: empshield
   - type: ModModule
+    idlePower: 0.24
     complexity: 1
-    idlePower: 0.2
   - type: ModEmpShieldModule
 
 - type: entity
@@ -417,9 +455,10 @@
   - type: Sprite
     state: thermal_visor
   - type: ModModule
+    activePower: 0.24
     moduleType: Toggle
     removable: false
-    activePower: 0.8
+    cooldown: 1.5
     requiredParts:
     - head
   - type: ModGrantComponentsModule
@@ -428,6 +467,7 @@
     - type: ThermalVision
       isEquipment: true
       isActive: true
+      toggleAction: null
       lightRadius: 15
 
 - type: entity
@@ -439,9 +479,9 @@
   - type: Sprite
     state: night_visor
   - type: ModModule
+    activePower: 0.08
     moduleType: Toggle
     removable: false
-    activePower: 0.4
     requiredParts:
     - head
   - type: ModGrantComponentsModule
@@ -486,9 +526,9 @@
   - type: Sprite
     state: sechud_visor
   - type: ModModule
+    activePower: 0.24
     moduleType: Toggle
     removable: false
-    activePower: 0.2
     requiredParts:
     - head
   - type: ModGrantComponentsModule
@@ -506,9 +546,9 @@
   - type: Sprite
     state: medhud_visor
   - type: ModModule
+    activePower: 0.24
     moduleType: Toggle
     removable: false
-    activePower: 0.2
     requiredParts:
     - head
   - type: ModGrantComponentsModule
@@ -552,6 +592,58 @@
     slot: gloves
     components:
     - type: Insulated
+
+- type: entity
+  parent: BaseModsuitModuleBuiltin
+  id: ModsuitModuleBuiltinAegisShield
+  name: integrated hardlight shield
+  description: A hardlight projector built into the Aegis control unit. Alt-use the unit while the suit is sealed to raise a personal shield.
+  components:
+  - type: Sprite
+    state: module
+  - type: ModModule
+    removable: false
+  - type: ModGrantComponentsModule
+    target: Suit
+    components:
+    - type: PersonalShield
+      visuals:
+        fillLevel: 0.15
+        hexDensity: 3
+        pixelGrid: 96
+        color: "#A66BE0"
+        scale: 2.0
+      shield:
+        requiredSlot: BACK
+        maxCharge: 250
+        regenRate: 5
+        spinupTime: 1
+        breakCooldown: 20
+        powerDraw: 0.5
+        blockModifier:
+          coefficients:
+            Heat: 1.25
+            Radiation: 1.5
+    - type: ItemToggle
+      onUse: false
+      onAltUse: true
+      onActivate: false
+      soundActivate:
+        path: /Audio/Weapons/ebladeon.ogg
+      soundDeactivate:
+        path: /Audio/Weapons/ebladeoff.ogg
+      soundFailToActivate:
+        path: /Audio/Machines/button.ogg
+        params:
+          variation: 0.250
+    - type: Battery
+      maxCharge: 100
+      startingCharge: 100
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 5
+      autoRechargePauseTime: 5
+  - type: ModShieldActionModule
 
 - type: entity
   parent: BaseModsuitModuleBuiltin
@@ -616,8 +708,8 @@
   - type: Sprite
     state: carry
   - type: ModModule
+    idlePower: 0.24
     complexity: 1
-    idlePower: 0.1
     requiredParts:
     - gloves
   - type: ModGrantComponentsModule
@@ -635,9 +727,9 @@
   - type: Sprite
     state: injector
   - type: ModModule
+    activePower: 0.24
     moduleType: Active
     complexity: 1
-    activePower: 0.2
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -652,9 +744,9 @@
   - type: Sprite
     state: defibrillator
   - type: ModModule
+    usePower: 20
     moduleType: Active
     complexity: 2
-    activePower: 1.2
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -707,8 +799,8 @@
   - type: Sprite
     state: radshield
   - type: ModModule
+    idlePower: 0.24
     complexity: 2
-    idlePower: 0.2
   - type: ModArmorModule
     modifiers:
       coefficients:
@@ -742,9 +834,9 @@
   - type: Sprite
     state: tether
   - type: ModModule
+    usePower: 0.8
     moduleType: Active
     complexity: 2
-    activePower: 0.4
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -759,9 +851,9 @@
   - type: Sprite
     state: mister
   - type: ModModule
+    activePower: 0.24
     moduleType: Active
     complexity: 2
-    activePower: 0.4
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -815,9 +907,9 @@
   - type: Sprite
     state: megaphone
   - type: ModModule
+    usePower: 0.4
     moduleType: Toggle
     complexity: 1
-    activePower: 0.2
     requiredParts:
     - head
   - type: ModLoudspeakerModule
@@ -826,14 +918,14 @@
   parent: BaseModsuitModule
   id: ModsuitModulePepperShoulders
   name: MOD pepper shoulders module
-  description: A module that attaches two pepper sprayers on shoulders of a MODsuit, releasing a cloud of capsaicin around the wearer on command.
+  description: A module that attaches two pepper sprayers on shoulders of a MODsuit, releasing a cloud of tear gas around the wearer on command.
   components:
   - type: Sprite
     state: pepper_shoulder
   - type: ModModule
+    usePower: 0.8
     moduleType: Usable
     complexity: 1
-    usePower: 15
     cooldown: 15
   - type: ModSpawnModule
     prototype: ModsuitPepperSmokeEffect
@@ -866,7 +958,6 @@
     state: bulwark
   - type: ModModule
     complexity: 3
-    idlePower: 0.2
     requiredParts:
     - shoes
   - type: ModGrantComponentsModule
@@ -883,9 +974,9 @@
   - type: Sprite
     state: drill
   - type: ModModule
+    usePower: 0.8
     moduleType: Active
     complexity: 1
-    activePower: 0.4
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -907,9 +998,9 @@
   - type: Sprite
     state: ore
   - type: ModModule
+    usePower: 0.16
     moduleType: Toggle
     complexity: 1
-    activePower: 0.2
     requiredParts:
     - gloves
   - type: ModGrantComponentsModule
@@ -939,9 +1030,9 @@
   - type: Sprite
     state: clamp
   - type: ModModule
+    usePower: 0.8
     moduleType: Active
     complexity: 3
-    activePower: 0.4
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -956,9 +1047,9 @@
   - type: Sprite
     state: scanner
   - type: ModModule
+    activePower: 0.16
     moduleType: Toggle
     complexity: 1
-    activePower: 0.2
     requiredParts:
     - head
   - type: ModGrantComponentsModule
@@ -975,9 +1066,9 @@
   - type: Sprite
     state: antigrav
   - type: ModModule
+    activePower: 0.56
     moduleType: Toggle
     complexity: 2
-    activePower: 1.2
     incompatible:
       tags:
       - ModsuitModuleGravity
@@ -999,9 +1090,9 @@
   - type: Sprite
     state: bikehorn
   - type: ModModule
+    usePower: 0.8
     moduleType: Usable
     complexity: 1
-    usePower: 3
     cooldown: 1
   - type: ModSoundModule
     sound:
@@ -1018,8 +1109,8 @@
   - type: Sprite
     state: waddle
   - type: ModModule
+    idlePower: 0.16
     complexity: 1
-    idlePower: 0.1
     requiredParts:
     - shoes
   - type: ModGrantComponentsModule
@@ -1036,9 +1127,9 @@
   - type: Sprite
     state: cleaner
   - type: ModModule
+    activePower: 0.8
     moduleType: Active
     complexity: 2
-    activePower: 0.4
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -1281,7 +1372,7 @@
     spreadAmount: 8
     solution:
       reagents:
-      - ReagentId: CapsaicinOil
+      - ReagentId: TearGas
         Quantity: 30
   - type: EmitSoundOnTrigger
     sound: /Audio/Effects/smoke.ogg
@@ -1335,8 +1426,8 @@
   - type: Sprite
     state: energy_shield
   - type: ModModule
+    idlePower: 0.4
     complexity: 3
-    idlePower: 0.8
   - type: ModEnergyShieldModule
 
 - type: entity
@@ -1348,8 +1439,8 @@
   - type: Sprite
     state: noslip
   - type: ModModule
+    idlePower: 0.08
     complexity: 1
-    idlePower: 0.1
     requiredParts:
     - shoes
   - type: ModGrantComponentsModule
@@ -1408,9 +1499,9 @@
   - type: Sprite
     state: emp_pulse
   - type: ModModule
+    usePower: 8
     moduleType: Usable
     complexity: 1
-    usePower: 60
     cooldown: 30
   - type: ModEmpPulseModule
   - type: ModEmpShieldModule
@@ -1425,9 +1516,10 @@
   - type: Sprite
     state: cloak_traitor
   - type: ModModule
+    activePower: 1.6
+    usePower: 8
     moduleType: Toggle
     complexity: 2
-    activePower: 1.6
     cooldown: 5
   - type: ModCloakModule
   - type: ModGrantComponentsModule
@@ -1451,7 +1543,6 @@
   - type: ModModule
     moduleType: Usable
     complexity: 2
-    usePower: 90
     cooldown: 120
     allowFlags: Incapacitated
   - type: ModInjectModule
@@ -1470,6 +1561,7 @@
   - type: Sprite
     state: dnalock
   - type: ModModule
+    usePower: 2.4
     moduleType: Usable
     complexity: 1
     allowFlags: Inactive
@@ -1504,9 +1596,9 @@
   - type: Sprite
     state: power_kick
   - type: ModModule
+    usePower: 4
     moduleType: Usable
     complexity: 2
-    usePower: 45
     cooldown: 5
     action: ActionModPowerKick
     requiredParts:
@@ -1525,9 +1617,9 @@
   - type: Sprite
     state: sphere
   - type: ModModule
+    activePower: 0.4
     moduleType: Toggle
     removable: false
-    activePower: 1.6
     cooldown: 1
     requiredParts:
     - head
@@ -1642,9 +1734,9 @@
   - type: Sprite
     state: clamp_loader
   - type: ModModule
+    usePower: 0.8
     moduleType: Active
     removable: false
-    activePower: 0.4
     requiredParts:
     - outerClothing
   - type: ModDeviceModule
@@ -1677,9 +1769,9 @@
   - type: Sprite
     state: launch_loader
   - type: ModModule
+    usePower: 8
     moduleType: Usable
     removable: false
-    usePower: 60
     cooldown: 4
     action: ActionModHydraulicLaunch
     requiredParts:
@@ -1708,9 +1800,9 @@
   - type: Sprite
     state: magnet_loader
   - type: ModModule
+    usePower: 2.4
     moduleType: Usable
     removable: false
-    usePower: 15
     cooldown: 1.5
     action: ActionModMagnet
     requiredParts:
@@ -1729,9 +1821,9 @@
   - type: Sprite
     state: candela_spool
   - type: ModModule
+    usePower: 0.8
     moduleType: Toggle
     complexity: 1
-    activePower: 0.2
     requiredParts:
     - outerClothing
     - gloves
@@ -1792,9 +1884,10 @@
   - type: Sprite
     state: jetpack_advanced
   - type: ModModule
+    activePower: 0.04
+    usePower: 0.8
     moduleType: Toggle
     complexity: 3
-    activePower: 10
     requiredParts:
     - outerClothing
     incompatible:
@@ -1811,9 +1904,10 @@
   description: "A heads-up display installed into the visor of the suit. This uses a small IR scanner to detect and identify the thermal radiation output of objects near the user. While it can detect the heat output of even something as small as a rodent, it still produces irritating red overlay. They say these also let you see behind you."
   components:
   - type: ModModule
+    activePower: 0.24
     moduleType: Toggle
     complexity: 2
-    activePower: 0.8
+    cooldown: 1.5
     removable: true
     requiredParts:
     - head
@@ -1836,9 +1930,9 @@
   description: "A heads-up display installed into the visor of the suit. Typical for both civilian and military applications, this allows the user to perceive their surroundings while in complete darkness, enhancing the view by tenfold; yet brightening everything into a spooky green glow. They say these also let you see behind you."
   components:
   - type: ModModule
+    activePower: 0.08
     moduleType: Toggle
     complexity: 1
-    activePower: 0.4
     removable: true
     requiredParts:
     - head
@@ -1863,8 +1957,8 @@
   - type: Sprite
     state: carry
   - type: ModModule
+    idlePower: 0.24
     complexity: 2
-    idlePower: 0.2
     requiredParts:
     - gloves
   - type: ModGrantComponentsModule
@@ -1882,9 +1976,9 @@
   - type: Sprite
     state: no_baton
   - type: ModModule
+    usePower: 0.8
     moduleType: Toggle
     complexity: 2
-    activePower: 0.4
     requiredParts:
     - outerClothing
   - type: ModGrantComponentsModule
@@ -1902,9 +1996,9 @@
   - type: Sprite
     state: dispenser
   - type: ModModule
+    usePower: 1.6
     moduleType: Usable
     complexity: 1
-    usePower: 324
     cooldown: 15
     requiredParts:
     - gloves
@@ -1921,9 +2015,9 @@
   - type: Sprite
     state: paper_maker
   - type: ModModule
+    usePower: 0.4
     moduleType: Usable
     complexity: 1
-    usePower: 2
     cooldown: 3
     requiredParts:
     - gloves
@@ -1940,9 +2034,9 @@
   - type: Sprite
     state: bloon
   - type: ModModule
+    usePower: 0.4
     moduleType: Usable
     complexity: 1
-    usePower: 5
     cooldown: 3
     requiredParts:
     - head
@@ -1962,9 +2056,9 @@
   - type: Sprite
     state: stamp
   - type: ModModule
+    activePower: 0.24
     moduleType: Active
     complexity: 1
-    activePower: 0.1
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -1989,7 +2083,6 @@
   - type: ModModule
     moduleType: Active
     complexity: 1
-    activePower: 0.1
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -2042,12 +2135,10 @@
   - type: ModModule
     moduleType: Active
     complexity: 3
-    activePower: 1.2
     requiredParts:
     - gloves
   - type: ModKinesisModule
     range: 8
-    grabPower: 10
     blacklist:
       components:
       - MobState
@@ -2061,9 +2152,9 @@
   - type: Sprite
     state: jump_jet
   - type: ModModule
+    usePower: 4
     moduleType: Usable
     complexity: 3
-    usePower: 40
     cooldown: 10
     requiredParts:
     - outerClothing
@@ -2078,8 +2169,8 @@
   - type: Sprite
     state: empshield
   - type: ModModule
+    idlePower: 0.24
     complexity: 2
-    idlePower: 0.8
   - type: ModEmpShieldModule
   - type: ModGrantComponentsModule
     target: Wearer
@@ -2096,6 +2187,7 @@
     state: joint_torsion
   - type: ModModule
     complexity: 1
+    allowDuplicates: true
     requiredParts:
     - shoes
   - type: ModJointTorsionModule
@@ -2109,8 +2201,8 @@
   - type: Sprite
     state: signlang_radio
   - type: ModModule
+    idlePower: 0.24
     complexity: 1
-    idlePower: 0.2
     requiredParts:
     - gloves
   - type: ModGrantComponentsModule
@@ -2129,8 +2221,8 @@
   - type: Sprite
     state: plasma_stabilizer
   - type: ModModule
+    idlePower: 0.24
     complexity: 1
-    idlePower: 0.2
     allowFlags: Inactive
     requiredParts:
     - head
@@ -2199,9 +2291,9 @@
   - type: Sprite
     state: criminal_capture
   - type: ModModule
+    usePower: 0.4
     moduleType: Active
     complexity: 2
-    activePower: 0.8
     requiredParts:
     - gloves
   - type: ModDeviceModule
@@ -2219,6 +2311,7 @@
   - type: ModPatientTransport
     bagPrototype: ModsuitCaptureBag
     captureDelay: 3.5
+    linkedIdlePower: 2.4
 
 - type: entity
   parent: BodyBag
@@ -2240,54 +2333,60 @@
     materialComposition: {}
 
 - type: entity
-  parent: BaseItem
+  parent: BalloonSyn
   id: ModsuitBalloonRed
   name: red balloon
   suffix: MOD
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: bloon
+    sprite: Objects/Fun/toys.rsi
+    state: synb
     color: "#ff4d4d"
   - type: Item
-    size: Tiny
+    size: Small
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: synb
   - type: StaticPrice
     price: 0
   - type: PhysicalComposition
     materialComposition: {}
 
 - type: entity
-  parent: BaseItem
+  parent: BalloonSyn
   id: ModsuitBalloonBlue
   name: blue balloon
   suffix: MOD
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: bloon
+    sprite: Objects/Fun/toys.rsi
+    state: synb
     color: "#4d7dff"
   - type: Item
-    size: Tiny
+    size: Small
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: synb
   - type: StaticPrice
     price: 0
   - type: PhysicalComposition
     materialComposition: {}
 
 - type: entity
-  parent: BaseItem
+  parent: BalloonSyn
   id: ModsuitBalloonGreen
   name: green balloon
   suffix: MOD
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: bloon
+    sprite: Objects/Fun/toys.rsi
+    state: synb
     color: "#4dff7d"
   - type: Item
-    size: Tiny
+    size: Small
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: synb
   - type: StaticPrice
     price: 0
   - type: PhysicalComposition
@@ -2302,8 +2401,8 @@
   - type: Sprite
     state: mag_harness
   - type: ModModule
+    usePower: 0.8
     complexity: 2
-    idlePower: 0.2
     requiredParts:
     - outerClothing
   - type: ModGrantComponentsModule
@@ -2320,9 +2419,9 @@
   - type: Sprite
     state: projectile_dampener
   - type: ModModule
+    activePower: 0.8
     moduleType: Toggle
     complexity: 3
-    activePower: 15
     cooldown: 1.5
     requiredParts:
     - outerClothing
@@ -2338,7 +2437,6 @@
     state: shooting_assistant
   - type: ModModule
     complexity: 3
-    idlePower: 0.4
     requiredParts:
     - gloves
   - type: ModShootingAssistantModule
