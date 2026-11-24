@@ -306,3 +306,105 @@
     totalIntensity: 10
 
 # Quasar end
+
+# WolfGate Start
+
+- type: entity
+  id: HeavyFighterOrdinanceGPOProjectile
+  name: GPO-L 50kg Unguided Bomb
+  description: Just passing by.
+  parent: ShipMissileBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Structural: 100
+        Blunt: 50
+        Heat: 50
+  - type: Sprite
+    sprite: _Mono/Objects/Weapons/Guns/Ammunition/Explosives/GPO.rsi
+    layers:
+    - state: GPO
+    scale: 1, 1
+  - type: Ammo
+    muzzleFlash: null
+  - type: RadarBlip
+    radarColor: "#ffff00"
+    scale: 3
+    shape: square
+  - type: TimedDespawn
+    lifetime: 30
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 4000
+    intensitySlope: 30
+    maxIntensity: 3000
+    tileBreakScale: 6
+  - type: MiningGatheringSoft
+  - type: MiningGatheringHard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:ExplodeBehavior
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+
+- type: entity
+  id: HeavyFighterOrdinanceGPOItem
+  name: GPO-H 500kg Unguided Bomb
+  description: A fairly durable and relatively high yield explosive payload. Rarely seen in conventional space combat and a remnant of ground-based warfare, bombs can deal devastating damage... if they manage to hit their target. It can fit in a light GPOL housing.
+  parent: BaseGrenade
+  components:
+  - type: Tag
+    tags:
+    - HeavyFighterOrdinance
+  - type: Item
+    size: Huge
+  - type: CartridgeAmmo
+    proto: HeavyFighterOrdinanceGPOProjectile
+    deleteOnSpawn: true
+    muzzleFlash: null
+  - type: Sprite
+    sprite: _Mono/Objects/Weapons/Guns/Ammunition/Explosives/GPO.rsi
+    layers:
+    - state: GPO
+      map: ["enum.AmmoVisualLayers.Base"]
+    scale: 1, 1
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: Flammable
+    fireSpread: true
+    firestackFade: -0.01
+    alwaysCombustible: true
+    damage:
+      types:
+        Heat: 1
+        Structural: 2
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 500
+    intensitySlope: 3
+    totalIntensity: 250
+
+# WolfGate End
