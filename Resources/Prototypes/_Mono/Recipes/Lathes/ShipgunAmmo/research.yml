@@ -109,7 +109,7 @@
 - type: latheRecipe
   id: GPOH500EMPBombUniversal
   parent: BaseAdvancedHeavyOrdinanceAmmoRecipe
-  result: HeavyFighterEMPOrdinanceGPOProjectile
+  result: HeavyFighterEMPOrdinanceGPOItem
 
 - type: latheRecipe
   id: GPOH500HEFBombUniversal
